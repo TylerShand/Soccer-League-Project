@@ -2,26 +2,43 @@ import csv
 
 # Sort a csv file of player info evenly into three teams
 # Team names passed in after file
-def sort_players(file, *args):
+def sort_players(file, team1_name, team2_name, team3_name):
 
     # Create three teams list with the team name at index 0
-    team1 = [args[0]]
-    team2 = [args[1]]
-    team3 = [args[2]]
+    team1 = [team1_name]
+    team2 = [team2_name]
+    team3 = [team3_name]
 
     # Convert csv_file to dict separate dicts
     with open(file, newline='') as csv_file:
         player_reader = csv.DictReader(csv_file, delimiter=',')
         # Store Dicts in a list
         players = list(player_reader)
-        # Variable to hold the maximum number of player allowed on each team
-        max_players = (len(players) / 3 + 1)
-
-        # Sort player into teams
+        # Variable to hold a list of players with soccer experience
+        skilled_players = []
         for player in players:
-            if len(team1) < max_players:
+            if player['Soccer Experience'] == 'YES':
+                skilled_players.append(player)
+                players.remove(player)
+        # Variable to hold the maximum number of UNSKILLED players allowed on each team
+        max_players = (len(players) / 3)
+        # Variable to hold the maximum number of UNSKILLED players + SKILLED players allowed on each team
+        max_skilled_players = (len(skilled_players) / 3) + max_players
+
+        # Sort UNSKILLED players into teams
+        for player in players:
+            if len(team1) <= max_players:
                 team1.append(player)
-            elif len(team2) < max_players:
+            elif len(team2) <= max_players:
+                team2.append(player)
+            else:
+                team3.append(player)
+
+        # Sort SKILLED players into teams
+        for player in skilled_players:
+            if len(team1) <= max_skilled_players:
+                team1.append(player)
+            elif len(team2) <= max_skilled_players:
                 team2.append(player)
             else:
                 team3.append(player)
@@ -62,7 +79,7 @@ def write_player_letters(team1, team2, team3):
                     player['Name']))
             letter.write(
                 '{} will be playing on the {} team; be sure to bring all the required equipment: shin-guards, cleats, \n'.format(
-                    player['Name'], team1[0]))
+                    player['Name'], team2[0]))
             letter.write('etc. We hope to see you all there!\n')
             letter.write('Sincerely,\nVirginia Soccer League')
     for player in team3[1:]:
@@ -74,13 +91,14 @@ def write_player_letters(team1, team2, team3):
                     player['Name']))
             letter.write(
                 '{} will be playing on the {} team; be sure to bring all the required equipment: shin-guards, cleats, \n'.format(
-                    player['Name'], team1[0]))
+                    player['Name'], team3[0]))
             letter.write('etc. We hope to see you all there!\n')
             letter.write('Sincerely,\nVirginia Soccer League')
 
 def main():
+    teams = 'Sharks', 'Dragons', 'Raptors'
     # Holds the tuple return value from sort_players
-    teams = sort_players('soccer_players.csv', 'Sharks', 'Dragons', 'Raptors')
+    teams = sort_players('soccer_players.csv', *teams)
 
     # Writes teams and players to teams.txt
     write_teams('teams.txt', *teams)
