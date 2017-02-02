@@ -46,6 +46,7 @@ def sort_players(file, team1_name, team2_name, team3_name):
     return team1, team2, team3
 
 # Write three teams with their respective players to the specified file
+# Teams are sliced to start at index 1 to prevent the team name from being mistaken for a player
 def write_teams(file, team1, team2, team3):
     with open(file, 'w') as file:
         file.write(team1[0] + '\n')
@@ -61,6 +62,7 @@ def write_teams(file, team1, team2, team3):
             file.write("{}, {}, {} \n".format(player['Name'], player['Soccer Experience'], player['Guardian Name(s)']))
 
 # Write letters individually to players on the specified teams
+# Teams are sliced to start at index 1 to prevent a letter being sent to the team name
 def write_player_letters(team1, team2, team3):
     for player in team1[1:]:
         filename = 'player_letters/' + player['Name'] + '.txt'
@@ -106,7 +108,7 @@ def main():
     # Write letters to players on the Sharks, Dragons, and the Raptors teams
     write_player_letters(*teams)
 
-# Check if running from '__main__'
+# Check if running directly
 if __name__ == '__main__':
     main()
 
