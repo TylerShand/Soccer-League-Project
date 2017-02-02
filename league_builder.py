@@ -50,7 +50,8 @@ def write_player_letters(team1, team2, team3):
         with open(filename, 'w') as letter:
             letter.write('Dear {},\n'.format(player['Guardian Name(s)']))
             letter.write('We are happy to that {} has joined our soccer league! The first game will be on the 10th of February.\n'.format(player['Name']))
-            letter.write('{} will be playing on the {} team. We hope to see you all there!\n'.format(player['Name'], team1[0]))
+            letter.write('{} will be playing on the {} team; be sure to bring all the required equipment: shin-guards, cleats, \n'.format(player['Name'], team1[0]))
+            letter.write('etc. We hope to see you all there!\n')
             letter.write('Sincerely,\nVirginia Soccer League')
     for player in team2[1:]:
         filename = 'player_letters/' + player['Name'] + '.txt'
@@ -60,7 +61,9 @@ def write_player_letters(team1, team2, team3):
                 'We are happy to that {} has joined our soccer league! The first game will be on the 10th of February.\n'.format(
                     player['Name']))
             letter.write(
-                '{} will be playing on the {} team. We hope to see you all there!\n'.format(player['Name'], team1[0]))
+                '{} will be playing on the {} team; be sure to bring all the required equipment: shin-guards, cleats, \n'.format(
+                    player['Name'], team1[0]))
+            letter.write('etc. We hope to see you all there!\n')
             letter.write('Sincerely,\nVirginia Soccer League')
     for player in team3[1:]:
         filename = 'player_letters/' + player['Name'] + '.txt'
@@ -70,10 +73,12 @@ def write_player_letters(team1, team2, team3):
                 'We are happy to that {} has joined our soccer league! The first game will be on the 10th of February.\n'.format(
                     player['Name']))
             letter.write(
-                '{} will be playing on the {} team. We hope to see you all there!\n'.format(player['Name'], team1[0]))
+                '{} will be playing on the {} team; be sure to bring all the required equipment: shin-guards, cleats, \n'.format(
+                    player['Name'], team1[0]))
+            letter.write('etc. We hope to see you all there!\n')
             letter.write('Sincerely,\nVirginia Soccer League')
-def main():
 
+def main():
     # Holds the tuple return value from sort_players
     teams = sort_players('soccer_players.csv', 'Sharks', 'Dragons', 'Raptors')
 
